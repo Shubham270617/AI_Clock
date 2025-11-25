@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+:root{
+  --bg: #070707;
+  --clock-bg: rgba(10,10,10,0.6);
+  --accent: #ff8a3d;
+  --accent-2: #ff4c2f;
+  --soft: rgba(255,200,170,0.06);
+  --text: #ffdcb0;
+  --neon-shadow: 0 0 24px rgba(255,120,40,0.9);
+  --glass: rgba(255,255,255,0.03);
+}
+
+/* theme modifiers (JS will toggle a .theme-fire/.theme-ice etc class on body) */
+.theme-ice { --accent: #6ee7ff; --accent-2:#5bd1ff; --text:#c9f7ff; --bg:#031427; }
+.theme-galaxy { --accent:#9f7cff; --accent-2:#3de6ff; --text:#e4d8ff; --bg:#04010a; }
+.theme-aurora { --accent:#8ef58c; --accent-2:#c6ff9c; --text:#e9ffe0; --bg:#02130a; }
+
+/* clock card */
+.clock-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  color: var(--text);
+  transition: all 500ms ease;
+}
+
+/* small helper */
+.fire-glow { text-shadow: var(--neon-shadow); }
+
+
+/* -------- ROBOT AI ASSISTANT (3D STYLE B) -------- */
+
+.assistant-compact {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 300px;
+  z-index: 9999;
+}
+
+.assistant-card.robot-3d {
+  background: rgba(10, 10, 12, 0.96);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 10px 25px rgba(0,0,0,0.4);
+  transform-style: preserve-3d;
+}
+
+/* Robot head */
+.robot-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.robot-head {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(255,120,40,0.3);
+}
+
+.robot-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1);
+}
+
+/* Robot eyes */
+.robot-eyes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.robot-eyes .eye {
+  width: 10px;
+  height: 10px;
+  background: #00eaff;
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(0,200,255,0.8);
+  transition: transform 0.12s ease;
+}
+
+.robot-eye-blink .eye {
+  transform: scaleY(0.1);
+}
+
+/* Robot text */
+.robot-name {
+  font-weight: 800;
+  color: #fff;
+}
+
+.robot-role {
+  font-size: 12px;
+  opacity: 0.6;
+  color: #9bd9ff;
+}
+
+/* Chat bubble */
+.assistant-message {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+  border-radius: 12px;
+  min-height: 48px;
+  color: #eee;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* Typing animation */
+.typing {
+  height: 12px;
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.typing.show {
+  opacity: 1;
+}
+
+.typing span {
+  width: 7px;
+  height: 7px;
+  background: #82e8ff;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: .3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: .3; transform: translateY(0); }
+}
+
+/* Input */
+.assistant-input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.assistant-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.assistant-send {
+  background: linear-gradient(90deg, #00f2ff, #00aaff);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Buttons */
+.assistant-quick {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.mini {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px;
+  color: #bfeaff;
+  cursor: pointer;
+}
+
+.robot-pulse {
+  animation: pulse .5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* -------- Assistant: mouth, core, hologram, eye-follow -------- */
+.assistant-compact { position: fixed; right: 48px; bottom: 48px; width: 320px; z-index:9999; }
+
+.assistant-card.robot-3d.hologram {
+  background: linear-gradient(180deg, rgba(12,12,14,0.92), rgba(20,20,22,0.96));
+  border-radius: 18px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 10px 30px rgba(0,0,0,0.45);
+  transform-style: preserve-3d;
+  backdrop-filter: blur(6px);
+}
+
+/* head area */
+.robot-head { position: relative; width:64px; height:64px; border-radius:14px; overflow:hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.6); display:inline-block; vertical-align:middle; }
+.robot-avatar { width:100%; height:100%; object-fit:cover; }
+.robot-eyes-2 { position:absolute; inset:0; display:flex; justify-content:space-between; padding:12px; pointer-events:none; }
+.eye-2 { width:10px; height:10px; background: linear-gradient(180deg,#9ef3ff,#40c8ff); border-radius:50%; box-shadow:0 6px 14px rgba(64,200,255,0.35); transform: translate(0,0); transition: transform 80ms linear; }
+
+/* mouth and core */
+.robot-mouth { position:absolute; left:50%; transform:translateX(-50%) scaleY(0.16); bottom:12px; width:24px; height:8px; background: linear-gradient(90deg,#ff9e55,#ff6b6b); border-radius:8px; opacity:0.85; transition: transform 160ms linear, opacity 180ms ease; }
+.robot-core { position:absolute; left:50%; transform:translateX(-50%); bottom:30px; width:10px; height:10px; border-radius:50%; background: radial-gradient(circle,#00f2ff,#0068ff); box-shadow:0 8px 26px rgba(0,160,255,0.28); opacity:0.95; }
+
+/* hologram glow */
+.hologram { box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 6px 40px rgba(0,140,255,0.06), 0 2px 18px rgba(255,100,30,0.02); border:1px solid rgba(80,200,255,0.05); }
+
+/* pulse */
+.robot-pulse { animation: robotPulse 560ms ease; }
+@keyframes robotPulse { 0%{ transform: scale(0.985) } 50%{ transform: scale(1.02) } 100%{ transform: scale(1) } }
+
+/* assistant message & typing same as before (keep) */
+
+/* helper for Three.js canvas placement (so it doesn't overlap important UI) */
+.three-canvas-helper { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+
+
+/* Theme */
+/* FIRE THEME (default) */
+:root {
+  --theme-accent: #ff6a00;
+  --theme-accent-glow: rgba(255, 100, 20, 0.65);
+  --theme-accent-shadow: rgba(255, 80, 0, 0.45);
+
+  --theme-text: #ffeede;
+  --theme-text-dim: #ffddb6aa;
+
+  --theme-bg: rgba(30, 10, 0, 0.3);
+  --theme-card-bg: rgba(255, 80, 20, 0.06);
+  --theme-input-bg: rgba(255, 150, 80, 0.08);
+
+  --theme-accent-border: rgba(255, 110, 50, 0.3);
+
+  --theme-button-bg: linear-gradient(90deg, #ff8a40, #ff5a00);
+  --theme-button-text: black;
+
+  --theme-delete: #ff6060;
+}
+
+/* ICE THEME */
+.theme-ice {
+  --theme-accent: #60cfff;
+  --theme-accent-glow: rgba(140, 220, 255, 0.6);
+  --theme-accent-shadow: rgba(100, 180, 255, 0.4);
+
+  --theme-text: #eaffff;
+  --theme-text-dim: #b8e4ff88;
+
+  --theme-bg: rgba(0, 20, 40, 0.35);
+  --theme-card-bg: rgba(90, 160, 255, 0.08);
+  --theme-input-bg: rgba(120, 200, 255, 0.1);
+
+  --theme-accent-border: rgba(140, 210, 255, 0.25);
+
+  --theme-button-bg: linear-gradient(90deg, #60cfff, #4aaaff);
+  --theme-button-text: #001a2d;
+
+  --theme-delete: #ff5050;
+}
+
+/* GALAXY THEME */
+.theme-galaxy {
+  --theme-accent: #a070ff;
+  --theme-accent-glow: rgba(180, 130, 255, 0.65);
+  --theme-accent-shadow: rgba(120, 80, 200, 0.45);
+
+  --theme-text: #f3e8ff;
+  --theme-text-dim: #d9c9ff88;
+
+  --theme-bg: rgba(40, 0, 60, 0.35);
+  --theme-card-bg: rgba(180, 90, 255, 0.08);
+  --theme-input-bg: rgba(200, 130, 255, 0.1);
+
+  --theme-accent-border: rgba(170, 110, 255, 0.25);
+
+  --theme-button-bg: linear-gradient(90deg, #c09aff, #a864ff);
+  --theme-button-text: #1a0028;
+
+  --theme-delete: #ff7299;
+}
+
+
+/* Sme height */
+.panel-box {
+  height: 260px;            /* set equal height for both */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* SParking Light */
+/* HOLOGRAM SCAN RING */
+.hologram-scan-ring {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 60%;
+  top: 20%;
+  border-radius: 10px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--theme-accent) 50%,
+    transparent 100%
+  );
+  box-shadow: 
+    0 0 10px var(--theme-accent-glow),
+    0 0 18px var(--theme-accent);
+
+  animation: holoScan 3.4s ease-in-out infinite;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+@keyframes holoScan {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, 140%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 0.3;
+  }
+}
+
+
+/* Mobile css */
+
+/* ---------- Mobile swipe panels under clock ---------- */
+.mobile-panels {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-panels::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-panels {
+  scrollbar-width: none;
+}
+
+
+/* Assistant: desktop = fixed bottom-right, mobile = inline panel */
+@media (max-width: 768px) {
+  .assistant-compact {
+    position: static;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 320px;
+    z-index: 20;
+  }
+}
