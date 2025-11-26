@@ -382,3 +382,30 @@
     z-index: 20;
   }
 }
+
+/* Rule for Assistant */
+.assistant-card {
+  position: relative;
+  z-index: 9999 !important;
+  overflow: visible !important;
+}
+
+.assistant-message {
+  position: relative;
+  z-index: 1;
+}
+
+.assistant-input-row {
+  position: relative;
+  z-index: 10;
+  background: rgba(0,0,0,0.4); 
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.assistant-input {
+  width: 100%;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10000 !important;
+}
